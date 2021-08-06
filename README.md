@@ -385,3 +385,55 @@ What exactly will this entail? - Simple instead of having to do the calculation,
 - Now an element with `8px` let's convert it it will be `0.8rem`;
 
 In case you haven't understood yet, just add a point to the left of the first digit. :)
+
+<br />
+
+## HACK TO SCORING BETTER ON GOOGLE PAGESPEED INSIGHTS
+
+When I built my blog, I had a big problem with google PageSpeed ​​Insights, more specifically with the import of google fonts in the project, it happens that I imported the fonts directly from the project's html, putting the google fonts link inside the `<head>`, which required 1.5 seconds of loading.
+
+So to solve this I started importing the fonts directly into css, and it saved my score by about 8 points... how is this done? - follow right below.
+
+First let's install the `Roboto` font. Open the terminal and run the following command:
+`yarn add @fontsource/roboto`.
+
+Now inside the global styles file `global.ts` add the following code snippet:
+```
+  import { createGlobalStyle, css } from "styled-components";
+
+  import RobotoRegular from "@fontsource/roboto/400.css";
+  import RobotoBold from "@fontsource/roboto/700.css";
+
+  const Fonts = css`
+    ${RobotoRegular}
+    ${RobotoBold}
+  `;
+
+  export default createGlobalStyle`
+    ${Fonts};
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { 
+      font-size: 62.5%;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+  `;
+```
+
+But we have to add the typing for the font file extension types in the typescript, for that inside the `@types` folder create the `fonts.d.ts` file and copy the following code snippet:
+```
+declare module "*.woff";
+declare module "*.ttf";
+declare module "*.css";
+```
+
+Basically what is happening is that we are importing css files that are already created and optimized for importing fonts, you can add as many fonts as you want (recommended 2 fonts and up to 2 styles for each (regular and bold)).
