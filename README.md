@@ -150,3 +150,25 @@ public
 With everything set up, now run the `yarn lint` command in your terminal. So eslint must have returned some syntax errors, so you can either solve it one-by-one or just run the `yarn lint --fix` command and it will force the code and fix it.
 
 PS: In case of error with eslint or prettier, remove the directory `node_modules` and `yarn-lock` and run the command `yarn` in your terminal again!
+
+<br />
+
+## PATHS SNIPPETS
+
+Do you know when you need to access a certain component or file inside a directory, and we have to type 4x the `../` just to get to the directory where the components are? - So the stretches of paths compose to help you.
+
+Inside the `tsconfig.json` file, inside `compiler-options` add the following:
+```
+  "paths": {
+    "@components/*": ["./src/components/*"],
+    "@styles/*": ["./src/styles/*"],
+    "@pages/*": ["./src/pages/*"],
+    "@services/*": ["./src/services/*"],
+    "@utils/*": ["./src/utils/*"],
+    "@assets/*": ["./src/assets/*"]
+  }
+```
+
+PS: Need to restart VSCODE if using it.
+
+With this you can import your components with `import { YourComponent } from "@components/YourComponent";`, you can also create your own snippets following the examples already created.
