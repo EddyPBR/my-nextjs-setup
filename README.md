@@ -15,13 +15,15 @@
 
 <br />
 
-## About
+## ABOUT
 
 This project is my base structure for NEXTJS applications. I researched a lot and learned a lot with other devs and other configurations, so I decided to create my own project setup with `NEXTJS`, `TYPESCRIPT`, `STYLED-COMPONENTS`, `ESLINT` and `PRETTIER`.
 
 I hope it will be useful to all who are watching/studying this project, and any tips, suggestions, or if you want to improve or create another project on top of this one, feel free and share it with me too.
 
 You can follow this README step-by-step or simply download the project and use all its structure, packages and configurations. That's it at last, I hope you like it!
+
+<br />
 
 ## ESTRUTURA BASE
 
@@ -45,6 +47,8 @@ First install the necessary packages to configure eslint and prettier, white the
 yarn add eslint eslint-config-prettier eslint-plugin-import eslint-plugin-import-helpers eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser -D
 ```
 
+<br />
+
 With the packages installed, let's configure the Prettier files.
 
 - First create a `.prettierrc` file, copy and paste the following code snippet:
@@ -55,6 +59,7 @@ With the packages installed, let's configure the Prettier files.
   }
 ```
 
+<br />
 
 - Now create a `.prettierignore` file, copy and paste the following code snippet:
 ```
@@ -64,6 +69,8 @@ yarn.lock
 package-lock.json
 public
 ```
+
+<br />
 
 - With prettier configured, let's now configure Eslint, copy the following code snippet into the file `.eslintrc`:
 ```
@@ -140,12 +147,16 @@ public
   }
 ```
 
+<br />
+
 - Now create the `.eslintignore` file and copy the following code snippet:
 ```
   **/node_modules/*
   **/out/*
   **/.next/*
 ```
+
+<br />
 
 With everything set up, now run the `yarn lint` command in your terminal. So eslint must have returned some syntax errors, so you can either solve it one-by-one or just run the `yarn lint --fix` command and it will force the code and fix it.
 
@@ -170,6 +181,8 @@ Inside the `tsconfig.json` file, inside `compiler-options` add the following:
   }
 ```
 
+<br />
+
 PS: Need to restart VSCODE if using it.
 
 With this you can import your components with `import { YourComponent } from "@components/YourComponent";`, you can also create your own snippets following the examples already created.
@@ -191,6 +204,7 @@ Editor config is used to maintain a certain pattern of indentation, charset and 
   trim_trailing_whitespace = true
   insert_final_newline = true
 ```
+
 <br />
 
 ## STYLED-COMPONENTS
@@ -202,6 +216,8 @@ When in fact it's interesting that this styling comes as a common css, without t
 - First let's install the babel package with the following command: 
 `yarn add babel-plugin-styled-components -D`
 
+<br />
+
 - Now you need to create a `.babelrc` file and copy the following code snippet:
 ```
   {
@@ -212,6 +228,8 @@ When in fact it's interesting that this styling comes as a common css, without t
     ]
   }
 ```
+
+<br />
 
 - Install styled-components, with the following command:
 `yarn add styled-components`
@@ -288,6 +306,8 @@ It's a common practice to create a theme file containing colors, fonts and the l
   };
 ```
 
+<br />
+
 - That done we have a problem, if by chance you try to access a property of `theme.ts` like for example: theme.colors.background, the typescript still won't understand its type, so we must tell the typescript what type of the `theme.ts` which is pretty simple. Create a folder called `@types` within that folder create a file called `styled.d.ts` and copy the following code snippet:
 ```
   import "styled-components";
@@ -300,6 +320,8 @@ It's a common practice to create a theme file containing colors, fonts and the l
     export interface DefaultTheme extends Theme {};
   };
 ```
+
+<br />
 
 - Nice! with the theme created and typing defined, let's create the global styling of our project. To do this create a `global.ts` file inside the `styles` directory and copy the following code snippet:
 ```
@@ -320,6 +342,8 @@ It's a common practice to create a theme file containing colors, fonts and the l
   `;
 ```
 
+<br />
+
 - Once that's done, let's create a ThemeProvider, inside the `_app.tsx` file, let's import the `ThemeProvider` of the styled components and the `theme.ts` that we just created, the code will look like this:
 ```
   import { ThemeProvider } from "styled-components";
@@ -339,6 +363,8 @@ It's a common practice to create a theme file containing colors, fonts and the l
   export default MyApp;
 ```
 
+<br />
+
 With that the global styling of our project would be defined, BUT... I advise you to see the next topic!
 
 <br />
@@ -355,6 +381,8 @@ It's pretty simple, inside `global.ts` we'll add the following `css` snippet:
     font-size: 62.5%;
   }
 ```
+
+<br />
 
 Looking like this:
 ```
@@ -377,6 +405,8 @@ Looking like this:
     }
   `;
 ```
+
+<br />
 
 What exactly will this entail? - Simple instead of having to do the calculation, let's just divide the value by 10. You must be finding it complicated, but it's not, follow the examples:
 
@@ -429,11 +459,15 @@ Now inside the global styles file `global.ts` add the following code snippet:
   `;
 ```
 
+<br />
+
 But we have to add the typing for the font file extension types in the typescript, for that inside the `@types` folder create the `fonts.d.ts` file and copy the following code snippet:
 ```
 declare module "*.woff";
 declare module "*.ttf";
 declare module "*.css";
 ```
+
+<br />
 
 Basically what is happening is that we are importing css files that are already created and optimized for importing fonts, you can add as many fonts as you want (recommended 2 fonts and up to 2 styles for each (regular and bold)).
