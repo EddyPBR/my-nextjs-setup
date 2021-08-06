@@ -190,3 +190,78 @@ Editor config is used to maintain a certain pattern of indentation, charset and 
   trim_trailing_whitespace = true
   insert_final_newline = true
 ```
+<br />
+
+## STYLED-COMPONENTS
+
+Some extra settings are needed with styled-components using nextjs, without these settings what would happen is that the page would load without any styling and then it would load the styles (that's why the styles would be loaded via javascript) causing a horrible "flash" on page load.
+
+When in fact it's interesting that this styling comes as a common css, without the need for a style loading script at all, so let's configure the styled-components.
+
+- First let's install the babel package with the following command: 
+`yarn add babel-plugin-styled-components -D`
+
+- Now you need to create a `.babelrc` file and copy the following code snippet:
+```
+  {
+    "presets": ["next/babel"],
+    "plugins": [
+      ["styled-components", { "ssr": true }],
+      "inline-react-svg"
+    ]
+  }
+```
+
+- Install styled-components, with the following command:
+`yarn add styled-components`
+
+- Install the types:
+`yarn add @types/styled-components  -D`
+
+- With the styled-components installed and babel configured, we have to configure nextjs to render the styled-components with css, for that inside the `pages` directory add the file `_document.tsx` and copy the following code snippet:
+```
+  import Document, { DocumentInitialProps, DocumentContext, Html, Head, Main, NextScript } from "next/document";
+  import { ServerStyleSheet } from "styled-components";
+
+  export default class MyDocument extends Document {
+    static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+      const sheet = new ServerStyleSheet();
+      const originalRenderPage = ctx.renderPage;
+
+      try {
+        ctx.renderPage = () =>
+          originalRenderPage({
+            enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+          });
+
+        const initialProps = await Document.getInitialProps(ctx);
+        return {
+          ...initialProps,
+          styles: (
+            <>
+              {initialProps.styles}
+              {sheet.getStyleElement()}
+            </>
+          )
+        }
+      } finally {
+        sheet.seal();
+      }
+    }
+
+    render(): JSX.Element {
+      return (
+        <Html lang="pt">
+          <Head>
+            <meta charSet="utf-8" />
+            <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+          </Head>
+          <body>
+            <Main />
+            <NextScript />
+          </body>
+        </Html>
+      );
+    }
+  }
+```
