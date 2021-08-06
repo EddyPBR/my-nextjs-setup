@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="eddypbr" src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" width="240px" />
+  <img alt="eddypbr" src="./.github/nextjs-logo.png" width="240px" />
   <br />
   <br />
   NextJS + Typescript - Setup
@@ -15,10 +15,23 @@
 
 <br />
 
-## Sobre este projeto
+## About
 
-Este projeto é minha estrutura base de aplicações NEXTJS pesquisei bastante e aprendi bastante com outros devs e outras configurações, então resolvi elaborar o meu próprio setup de projeto com NEXTJS + TYPESCRIPT + STYLED-COMPONENTS + ESLINT + PRETTIER. 
+This project is my base structure for NEXTJS applications. I researched a lot and learned a lot with other devs and other configurations, so I decided to create my own project setup with `NEXTJS`, `TYPESCRIPT`, `STYLED-COMPONENTS`, `ESLINT` and `PRETTIER`.
 
-Espero que seja util a todos os que estiverem observando/estudando este projeto, e qualquer dica, sugestão, ou se quiser melhorar ou criar outro projeto encima deste, fiquem a vontade e compartilhem comigo tambem.
+I hope it will be useful to all who are watching/studying this project, and any tips, suggestions, or if you want to improve or create another project on top of this one, feel free and share it with me too.
 
-Você pode seguir o passo-a-passo deste README ou simplesmente baixar o projeto e utilizar toda a estrutura, pacotes e configurações dele. Por fim é isso, espero que gostem!
+You can follow this README step-by-step or simply download the project and use all its structure, packages and configurations. That's it at last, I hope you like it!
+
+## ESTRUTURA BASE
+
+- Execute the command: `yarn create next-app . --typescript`
+- Remove api folder;
+- Remove styles folder;
+- In the file `_app.tsx` remove the import from global.css;
+- In the file `index.tsx`: Remove the following tags `<main>` and `<footer>` and their respective child tags, remove component Image import, 
+remove link tag from favicon, remove import styles from `Home.modules.css`, and the `className` of the `<div>` tag;
+- Delete the README.md file;
+- Create a folder called "src";
+- Put the "pages" folder into the "src" folder;
+
