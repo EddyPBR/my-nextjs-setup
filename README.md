@@ -305,7 +305,7 @@ It's a common practice to create a theme file containing colors, fonts and the l
 ```
   import { createGlobalStyle } from "styled-components";
 
-  export default createGlobalStyle`
+  export const GlobalStyle = createGlobalStyle`
     * {
       margin: 0;
       padding: 0;
@@ -324,7 +324,7 @@ It's a common practice to create a theme file containing colors, fonts and the l
 ```
   import { ThemeProvider } from "styled-components";
   import { theme } from "@styles/theme";
-  import GlobalStyle from "@styles/global";
+  import { GlobalStyle } from "@styles/global";
 
   import type { AppProps } from "next/app";
 
@@ -340,3 +340,48 @@ It's a common practice to create a theme file containing colors, fonts and the l
 ```
 
 With that the global styling of our project would be defined, BUT... I advise you to see the next topic!
+
+<br />
+
+## HACK TO USE `REM` AND NOT `PX`
+
+Firstly, using the `rem` size when inserting `px` is almost mandatory due to the responsiveness issues of any and all projects, but in some cases this takes time, because we need to perform that simple calculation of transforming `px` elements to `rem`.
+
+This calculation is determined by: `elementsize / 16`. For example: I want to convert a text of size `28px to rem` we would calculate `28 / 16 = 1.75rem` that over and over again slows down our development, so comes the hack I will teach.
+
+It's pretty simple, inside `global.ts` we'll add the following `css` snippet:
+```
+  body { 
+    font-size: 62.5%;
+  }
+```
+
+Looking like this:
+```
+  import { createGlobalStyle } from "styled-components";
+
+  export default createGlobalStyle`
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+  `;
+```
+
+What exactly will this entail? - Simple instead of having to do the calculation, let's just divide the value by 10. You must be finding it complicated, but it's not, follow the examples:
+
+- We have an element with `230px` and we want to convert it to `rem`, just do the following: `23.0rem`;
+- We have an element with `27px` and we want to convert it to `rem`, just put: `2.7rem`;
+- Now an element with `8px` let's convert it it will be `0.8rem`;
+
+In case you haven't understood yet, just add a point to the left of the first digit. :)
