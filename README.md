@@ -149,16 +149,17 @@ public
 
 With everything set up, now run the `yarn lint` command in your terminal. So eslint must have returned some syntax errors, so you can either solve it one-by-one or just run the `yarn lint --fix` command and it will force the code and fix it.
 
-PS: In case of error with eslint or prettier, remove the directory `node_modules` and `yarn-lock` and run the command `yarn` in your terminal again!
+PS: In case of error with eslint or prettier, remove the folder `node_modules` and `yarn-lock` and run the command `yarn` in your terminal again!
 
 <br />
 
 ## PATHS SNIPPETS
 
-Do you know when you need to access a certain component or file inside a directory, and we have to type 4x the `../` just to get to the directory where the components are? - So the stretches of paths compose to help you.
+Do you know when you need to access a certain component or file inside a folder, and we have to type 4x the `../` just to get to the folder where the components are? - So the stretches of paths compose to help you.
 
 Inside the `tsconfig.json` file, inside `compiler-options` add the following:
 ```
+  "baseUrl": ".",
   "paths": {
     "@components/*": ["./src/components/*"],
     "@styles/*": ["./src/styles/*"],
@@ -218,7 +219,7 @@ When in fact it's interesting that this styling comes as a common css, without t
 - Install the types:
 `yarn add @types/styled-components  -D`
 
-- With the styled-components installed and babel configured, we have to configure nextjs to render the styled-components with css, for that inside the `pages` directory add the file `_document.tsx` and copy the following code snippet:
+- With the styled-components installed and babel configured, we have to configure nextjs to render the styled-components with css, for that inside the `pages` folder add the file `_document.tsx` and copy the following code snippet:
 ```
   import Document, { DocumentInitialProps, DocumentContext, Html, Head, Main, NextScript } from "next/document";
   import { ServerStyleSheet } from "styled-components";
@@ -265,3 +266,77 @@ When in fact it's interesting that this styling comes as a common css, without t
     }
   }
 ```
+
+<br />
+
+## STYLED-COMPONENTS THEME PROVIDER AND GLOBAL CONFIG
+
+It's a common practice to create a theme file containing colors, fonts and the like, and also a global configuration file, but do you know the best practices and how to define typeses using typescript? - if you don't know, this topic will be useful to you.
+
+- Now let's create a theme for our application. Inside the `src` folder create the `styles` folder and now create a file called `theme.ts` and copy the following code snippet:
+```
+  export const theme = {
+    colors: {
+      link: "#645CEE",
+      text: "#AAB1BB",
+      background: "#090E14",
+    },
+    fonts: {
+      title: "700 2rem 'Roboto', sans-serif",
+      text: "400 1rem 'Roboto', sans-serif",
+    },
+  };
+```
+
+- That done we have a problem, if by chance you try to access a property of `theme.ts` like for example: theme.colors.background, the typescript still won't understand its type, so we must tell the typescript what type of the `theme.ts` which is pretty simple. Create a folder called `@types` within that folder create a file called `styled.d.ts` and copy the following code snippet:
+```
+  import "styled-components";
+
+  import { theme } from "@styles/theme";
+
+  export type Theme = typeof theme;
+
+  declare module "styled-components" {
+    export interface DefaultTheme extends Theme {};
+  };
+```
+
+- Nice! with the theme created and typing defined, let's create the global styling of our project. To do this create a `global.ts` file inside the `styles` directory and copy the following code snippet:
+```
+  import { createGlobalStyle } from "styled-components";
+
+  export default createGlobalStyle`
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: ${props => props.theme.colors.background};
+      color: ${props => props.theme.colors.text};
+      font: ${props => props.theme.fonts.text};
+    }
+  `;
+```
+
+- Once that's done, let's create a ThemeProvider, inside the `_app.tsx` file, let's import the `ThemeProvider` of the styled components and the `theme.ts` that we just created, the code will look like this:
+```
+  import { ThemeProvider } from "styled-components";
+  import { theme } from "@styles/theme";
+  import GlobalStyle from "@styles/global";
+
+  import type { AppProps } from "next/app";
+
+  function MyApp({ Component, pageProps }: AppProps) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+        <GlobalStyle />
+      </ThemeProvider>
+    );
+  }
+  export default MyApp;
+```
+
+With that the global styling of our project would be defined, BUT... I advise you to see the next topic!
