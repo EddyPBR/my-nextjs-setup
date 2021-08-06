@@ -35,3 +35,118 @@ remove link tag from favicon, remove import styles from `Home.modules.css`, and 
 - Create a folder called "src";
 - Put the "pages" folder into the "src" folder;
 
+<br />
+
+## ESLINT E PRETTIER
+
+First install the necessary packages to configure eslint and prettier, white the command:
+
+```
+yarn add eslint eslint-config-prettier eslint-plugin-import eslint-plugin-import-helpers eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser -D
+```
+
+With the packages installed, let's configure the Prettier files.
+
+- First create a `.prettierrc` file, copy and paste the following code snippet:
+```
+  {
+    "semi": true, // ponto e virgula
+    "singleQuote": false // aspas simples
+  }
+```
+
+
+- Now create a `.prettierignore` file, copy and paste the following code snippet:
+```
+node_modules
+.next
+yarn.lock
+package-lock.json
+public
+```
+
+- With prettier configured, let's now configure Eslint, copy the following code snippet into the file `.eslintrc`:
+```
+  {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "react",
+      "react-hooks",
+      "@typescript-eslint",
+      "prettier",
+      "eslint-plugin-import-helpers",
+      "import"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "next",
+      "next/core-web-vitals"
+    ],
+    "env": {
+      "es6": true,
+      "browser": true,
+      "jest": false,
+      "node": true
+    },
+    "rules": {
+      "comma-dangle": ["error", "always-multiline"],
+      "semi": "error",
+      "prettier/prettier": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "react/react-in-jsx-scope": 0,
+      "react/display-name": 0,
+      "react/prop-types": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/member-delimiter-style": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/no-use-before-define": 0,
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "no-console": [
+        "warn",
+        {
+          "allow": ["warn", "error"]
+        }
+      ],
+      "import/no-duplicates": ["error", { "considerQueryString": true }],
+      "import-helpers/order-imports": [
+        "warn",
+        {
+          "newlinesBetween": "always",
+          "groups": [
+            ["/^react/"],
+            ["module"],
+            ["/^~//"],
+            ["parent", "sibling", "index"]
+          ],
+          "alphabetize": { "order": "asc", "ignoreCase": true }
+        }
+      ]
+    }
+  }
+```
+
+- Now create the `.eslintignore` file and copy the following code snippet:
+```
+  **/node_modules/*
+  **/out/*
+  **/.next/*
+```
+
+With everything set up, now run the `yarn lint` command in your terminal. So eslint must have returned some syntax errors, so you can either solve it one-by-one or just run the `yarn lint --fix` command and it will force the code and fix it.
+
+PS: In case of error with eslint or prettier, remove the directory `node_modules` and `yarn-lock` and run the command `yarn` in your terminal again!
