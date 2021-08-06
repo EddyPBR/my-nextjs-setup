@@ -172,3 +172,21 @@ Inside the `tsconfig.json` file, inside `compiler-options` add the following:
 PS: Need to restart VSCODE if using it.
 
 With this you can import your components with `import { YourComponent } from "@components/YourComponent";`, you can also create your own snippets following the examples already created.
+
+<br />
+
+## EDITOR CONFIG
+
+Editor config is used to maintain a certain pattern of indentation, charset and other text editing settings, just create a `.editorconfig` file and copy and paste the following code snippet:
+
+```
+  root = true
+
+  [*]
+  indent_style = space
+  indent_size = 2
+  charset = utf-8
+  end_of_line = lf
+  trim_trailing_whitespace = true
+  insert_final_newline = true
+```
