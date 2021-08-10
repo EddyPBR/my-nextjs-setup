@@ -27,15 +27,18 @@ You can follow this README step-by-step or simply download the project and use a
 
 ## ESTRUTURA BASE
 
-- Execute the command: `yarn create next-app . --typescript`
+- Execute the command:
+```
+  yarn create next-app . --typescript
+```
 - Remove api folder;
 - Remove styles folder;
 - In the file `_app.tsx` remove the import from global.css;
 - In the file `index.tsx`: Remove the following tags `<main>` and `<footer>` and their respective child tags, remove component Image import, 
 remove link tag from favicon, remove import styles from `Home.modules.css`, and the `className` of the `<div>` tag;
-- Delete the README.md file;
-- Create a folder called "src";
-- Put the "pages" folder into the "src" folder;
+- Delete the `README.md` file;
+- Create a folder called `src`;
+- Put the `pages` folder into the `src` folder;
 
 <br />
 
@@ -214,7 +217,9 @@ Some extra settings are needed with styled-components using nextjs, without thes
 When in fact it's interesting that this styling comes as a common css, without the need for a style loading script at all, so let's configure the styled-components.
 
 - First let's install the babel package with the following command: 
-`yarn add babel-plugin-styled-components -D`
+```
+  yarn add babel-plugin-styled-components -D
+```
 
 <br />
 
@@ -232,10 +237,14 @@ When in fact it's interesting that this styling comes as a common css, without t
 <br />
 
 - Install styled-components, with the following command:
-`yarn add styled-components`
+```
+  yarn add styled-components
+```
 
 - Install the types:
-`yarn add @types/styled-components  -D`
+```
+  yarn add @types/styled-components  -D
+```
 
 - With the styled-components installed and babel configured, we have to configure nextjs to render the styled-components with css, for that inside the `pages` folder add the file `_document.tsx` and copy the following code snippet:
 ```
@@ -425,7 +434,9 @@ When I built my blog, I had a big problem with google PageSpeed ​​Insights, 
 So to solve this I started importing the fonts directly into css, and it saved my score by about 8 points... how is this done? - follow right below.
 
 First let's install the `Roboto` font. Open the terminal and run the following command:
-`yarn add @fontsource/roboto`.
+```
+  yarn add @fontsource/roboto
+```
 
 Now inside the global styles file `global.ts` add the following code snippet:
 ```
@@ -463,9 +474,9 @@ Now inside the global styles file `global.ts` add the following code snippet:
 
 But we have to add the typing for the font file extension types in the typescript, for that inside the `@types` folder create the `fonts.d.ts` file and copy the following code snippet:
 ```
-declare module "*.woff";
-declare module "*.ttf";
-declare module "*.css";
+  declare module "*.woff";
+  declare module "*.ttf";
+  declare module "*.css";
 ```
 
 <br />
@@ -485,7 +496,9 @@ So this topic will teach you how to standardize commits in an interactive and ea
 - commitizen
 
 Well let's get started, First let's install commitlint:
-`yarn add @commitlint/{config-conventional,cli} -D`
+```
+  yarn add @commitlint/{config-conventional,cli} -D
+```
 
 With commitlint installed, create a file called `commitlint.config.js` and add the following code snippet:
 ```
@@ -497,13 +510,19 @@ With commitlint installed, create a file called `commitlint.config.js` and add t
 <br />
 
 - Let's install husky:
-`yarn add husky -D`
+```
+  yarn add husky -D
+```
 
 - Create a config for husky with:
-`yarn husky install`
+```
+  yarn husky install
+```
 
 - Adding hook for commits:
-`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`
+```
+  npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+```
 
 With that we already have standardized commits, if you try for example to make a commit with `:octocat: testing a commit`, we will get an error, because it runs away from the commitlint patterns of the angular pattern. You can successfully commit using `feat: testing a commit`.
 
@@ -512,10 +531,16 @@ Okay we are with a standardization, but it may be that some devs mainly from ope
 For this we will use commitizen. Open your command interface and run the following:
 
 - Install commitizen: 
-`yarn add commitizen -D`
+```
+  yarn add commitizen -D
+```
 
 - Initialize commitizen: 
-`commitizen init cz-conventional-changelog --yarn --dev --exact`
+```
+  commitizen init cz-conventional-changelog --yarn --dev --exact
+```
 
 - Setting up husky hook to execute commitize during `git commit` command. 
-`npx husky add .husky/prepare-commit-msg "exec < /dev/tty && git cz --hook || true"`
+```
+  npx husky add .husky/prepare-commit-msg "exec < /dev/tty && git cz --hook || true"
+```
