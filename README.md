@@ -471,3 +471,51 @@ declare module "*.css";
 <br />
 
 Basically what is happening is that we are importing css files that are already created and optimized for importing fonts, you can add as many fonts as you want (recommended 2 fonts and up to 2 styles for each (regular and bold)).
+
+<br />
+
+## STANDARDIZE COMMITS
+
+When working on projects that involve a team, a series of code standardization is recommended, but the standardization of commits also helps the team a lot.
+
+So this topic will teach you how to standardize commits in an interactive and easy way for all devs working on your project. There are several commit patterns, but in this topic apply the angular community pattern. For this we will need three packages, they are:
+
+- commitlint
+- husky
+- commitizen
+
+Well let's get started, First let's install commitlint:
+`yarn add @commitlint/{config-conventional,cli} -D`
+
+With commitlint installed, create a file called `commitlint.config.js` and add the following code snippet:
+```
+  module.exports = {
+    extends: ['@commitlint/config-conventional']
+  }
+```
+
+<br />
+
+- Let's install husky:
+`yarn add husky -D`
+
+- Create a config for husky with:
+`yarn husky install`
+
+- Adding hook for commits:
+`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`
+
+With that we already have standardized commits, if you try for example to make a commit with `:octocat: testing a commit`, we will get an error, because it runs away from the commitlint patterns of the angular pattern. You can successfully commit using `feat: testing a commit`.
+
+Okay we are with a standardization, but it may be that some devs mainly from open souce projects find it difficult to follow the standards, and have to look for the project's commit documentation, so to solve that, let's add some interactivity at commit time.
+
+For this we will use commitizen. Open your command interface and run the following:
+
+- Install commitizen: 
+`yarn add commitizen -D`
+
+- Initialize commitizen: 
+`commitizen init cz-conventional-changelog --yarn --dev --exact`
+
+- Setting up husky hook to execute commitize during `git commit` command. 
+`npx husky add .husky/prepare-commit-msg "exec < /dev/tty && git cz --hook || true"`
