@@ -226,10 +226,18 @@ When in fact it's interesting that this styling comes as a common css, without t
 - Now you need to create a `.babelrc` file and copy the following code snippet:
 ```
   {
-    "presets": ["next/babel"],
+    "presets": [
+      "next/babel"
+    ],
     "plugins": [
-      ["styled-components", { "ssr": true }],
-      "inline-react-svg"
+      [
+        "styled-components",
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
+      ]
     ]
   }
 ```
