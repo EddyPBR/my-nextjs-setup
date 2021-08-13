@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "rusky": "yarn husky install"
+    "husky": "yarn husky install"
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.0",
